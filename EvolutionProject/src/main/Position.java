@@ -17,6 +17,7 @@ public class Position {
 
     /**
      * Checks if two positions are the same.
+     *
      * @param other Position to compare.
      * @return True if positions are the same.
      */
@@ -31,8 +32,9 @@ public class Position {
 
     /**
      * Adds positions.
+     *
      * @param other Position to add.
-     * @return  New position after addition.
+     * @return New position after addition.
      */
     public Position add(Position other) {
         return new Position((this.x + other.x), (this.y + other.y));
@@ -40,24 +42,31 @@ public class Position {
 
     /**
      * Checks if position is inside rectangle with vertexes is (0,0) and position given by parameter, with sides parallel to axises
+     *
      * @param upperRight Position of second vertex of rectangle
      * @return true if position is contained
      */
     public boolean isContainedByUpperRight(Position upperRight) {
-        if(this.x > upperRight.x || this.y > upperRight.y) return false;
+        if (this.x > upperRight.x || this.y > upperRight.y) return false;
         return true;
     }
 
     /**
      * Gets x of position.
+     *
      * @return x of position.
      */
-    public int getX() {return this.x;}
+    public int getX() {
+        return this.x;
+    }
 
     /**
      * Gets y of position.
+     *
      * @return y of position.
      */
-    public int getY() {return this.y;}
+    public int getY() {
+        return this.y;
+    }
 
 }

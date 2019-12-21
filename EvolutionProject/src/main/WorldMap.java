@@ -24,15 +24,16 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Changes position to be looped within map.
+     *
      * @param position Position to change.
      * @return Looped position.
      */
     private Position loopChange(Position position) {
-        return (new Position(((position.getX()%width)+width)%width,((position.getY()%height)+height)%height));
+        return (new Position(((position.getX() % width) + width) % width, ((position.getY() % height) + height) % height));
     }
 
     public WorldMap(int width, int height, int startEnergy, int moveEnergy, int plantEnergy, double jungleRatio) {
-        if(jungleRatio < 0 || jungleRatio > 1 || startEnergy < 0 || moveEnergy < 0 || plantEnergy < 0 || height < 0 || width < 0) {
+        if (jungleRatio < 0 || jungleRatio > 1 || startEnergy < 0 || moveEnergy < 0 || plantEnergy < 0 || height < 0 || width < 0) {
             throw new IllegalArgumentException("World map argument(s) not in scope");
         }
         this.width = width;
@@ -52,23 +53,23 @@ public class WorldMap implements IWorldMap {
         this.positionsWithoutElementInsideJungle = new ArrayList<>();
         for (int i = 0; i < jungleWidth; i++) {
             for (int j = 0; j < jungleHeight; j++) {
-                positionsWithoutElementInsideJungle.add(new Position( i, j));
+                positionsWithoutElementInsideJungle.add(new Position(i, j));
             }
         }
         this.positionsWithoutElementOutsideJungle = new ArrayList<>();
         for (int i = jungleWidth; i < width; i++) {
             for (int j = 0; j < jungleHeight; j++) {
-                positionsWithoutElementOutsideJungle.add(new Position( i, j));
+                positionsWithoutElementOutsideJungle.add(new Position(i, j));
             }
         }
         for (int i = 0; i < jungleWidth; i++) {
             for (int j = jungleHeight; j < height; j++) {
-                positionsWithoutElementOutsideJungle.add(new Position( i, j));
+                positionsWithoutElementOutsideJungle.add(new Position(i, j));
             }
         }
         for (int i = jungleWidth; i < width; i++) {
             for (int j = jungleHeight; j < height; j++) {
-                positionsWithoutElementOutsideJungle.add(new Position( i, j));
+                positionsWithoutElementOutsideJungle.add(new Position(i, j));
             }
         }
     }
@@ -78,11 +79,10 @@ public class WorldMap implements IWorldMap {
         Position animalPosition = animal.getPosition();
         boolean wasOccupied = isOccupied(animalPosition);
         if (!wasOccupied) {
-            if(inJungle(animalPosition)) {
+            if (inJungle(animalPosition)) {
                 positionsWithElementInsideJungle.add(animalPosition);
                 positionsWithoutElementInsideJungle.remove(animalPosition);
-            }
-            else {
+            } else {
                 positionsWithElementOutsideJungle.add(animalPosition);
                 positionsWithoutElementOutsideJungle.remove(animalPosition);
             }
@@ -104,23 +104,24 @@ public class WorldMap implements IWorldMap {
         LinkedList<Animal> packAtPosition = animalPacks.get(position);
         if (packAtPosition != null) {
             return packAtPosition.getFirst();
-        }
-        else {
+        } else {
             return grasses.get(position);
         }
     }
 
     /**
      * Checks if position is inside the jungle.
+     *
      * @param position Position to check.
      * @return true if position is inside jungle.
      */
     private boolean inJungle(Position position) {
-        return position.isContainedByUpperRight(new Position(jungleWidth-1, jungleHeight-1));
+        return position.isContainedByUpperRight(new Position(jungleWidth - 1, jungleHeight - 1));
     }
 
     /**
      * Places grass on map.
+     *
      * @param grass Grass to place.
      */
     private void placeGrass(Grass grass) {
@@ -129,11 +130,10 @@ public class WorldMap implements IWorldMap {
             throw new IllegalArgumentException("Can't place grass on occupied position");
         }
         grasses.put(grass.getPosition(), grass);
-        if(inJungle(grassPosition)) {
+        if (inJungle(grassPosition)) {
             positionsWithElementInsideJungle.add(grassPosition);
             positionsWithoutElementInsideJungle.remove(grassPosition);
-        }
-        else {
+        } else {
             positionsWithElementOutsideJungle.add(grassPosition);
             positionsWithoutElementOutsideJungle.remove(grassPosition);
         }
@@ -141,6 +141,7 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Adds animal to pack at its position and creates it if there isn't one already.
+     *
      * @param animal Animal to add to pack.
      */
     private void addToPack(Animal animal) {
@@ -153,8 +154,7 @@ public class WorldMap implements IWorldMap {
             LinkedList<Animal> newPack = new LinkedList<>();
             animalPacks.put(animalPosition, newPack);
             newPack.add(animal);
-        }
-        else {
+        } else {
             packToAddTo.add(animal);
             packToAddTo.sort(new AnimalComparator());
         }
@@ -162,15 +162,16 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Removes animal from map.
+     *
      * @param animal Animal to remove.
-     * @param kill Tells if animal should be permanently removed from map.
+     * @param kill   Tells if animal should be permanently removed from map.
      */
     private void removeAnimal(Animal animal, boolean kill) {
         if (animal == null) {
             throw new IllegalArgumentException("Can't remove animal being null");
         }
         Position animalPosition = animal.getPosition();
-        LinkedList<Animal> packToRemoveFrom =animalPacks.get(animalPosition);
+        LinkedList<Animal> packToRemoveFrom = animalPacks.get(animalPosition);
         if (packToRemoveFrom == null) {
             throw new IllegalArgumentException("Can't remove animal from non existing pack");
         }
@@ -178,11 +179,10 @@ public class WorldMap implements IWorldMap {
         if (packToRemoveFrom.size() == 0) {
             animalPacks.remove(animalPosition);
             if (!isOccupied(animalPosition)) {
-                if(inJungle(animalPosition)) {
+                if (inJungle(animalPosition)) {
                     positionsWithElementInsideJungle.remove(animalPosition);
                     positionsWithoutElementInsideJungle.add(animalPosition);
-                }
-                else {
+                } else {
                     positionsWithElementOutsideJungle.remove(animalPosition);
                     positionsWithoutElementOutsideJungle.add(animalPosition);
                 }
@@ -198,6 +198,7 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Removes grass from map.
+     *
      * @param grass Grass to remove.
      */
     private void removeGrass(Grass grass) {
@@ -220,7 +221,7 @@ public class WorldMap implements IWorldMap {
     private void clearStarved() {
         ArrayList<Animal> animalsToRemove = new ArrayList<>();
         for (int i = 0; i < animalList.size(); i++) {
-            Animal animalToCheck =animalList.get(i);
+            Animal animalToCheck = animalList.get(i);
             if (animalToCheck.getEnergy() <= 0) animalsToRemove.add(animalToCheck);
         }
         while (animalsToRemove.size() > 0) {
@@ -246,6 +247,7 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Gives food divided by number of strongest animals in pack.
+     *
      * @param eatingPack Pack to feed.
      */
     private void Feed(LinkedList<Animal> eatingPack) {
@@ -255,7 +257,7 @@ public class WorldMap implements IWorldMap {
             for (int i = 1; i < eatingPack.size() && eatingPack.get(i).getEnergy() == maxEnergy; i++) {
                 strongestEndIndex++;
             }
-            int energyGain = plantEnergy/(1+strongestEndIndex);
+            int energyGain = plantEnergy / (1 + strongestEndIndex);
             for (int i = 0; i <= strongestEndIndex; i++) {
                 eatingPack.get(i).eat(energyGain);
             }
@@ -281,15 +283,16 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Gives position of random free neighbouring position if there's any. If not give random neighbouring position.
+     *
      * @param position Position of which searches for neighbours.
      * @return Position of free random neighbour if there's any. If not, random neighbour.
      */
     private Position randomNeighbour(Position position) {
         ArrayList<Position> freeNeighbours = new ArrayList<>();
-        for(int i = -1; i <= 1; i++) {
-            for(int j = -1; j <= 1; j++) {
-                Position neighbour = new Position(i + position.getX(),j + position.getY());
-                if ((!neighbour.equals(position))&&!isOccupied(neighbour)) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                Position neighbour = new Position(i + position.getX(), j + position.getY());
+                if ((!neighbour.equals(position)) && !isOccupied(neighbour)) {
                     freeNeighbours.add(neighbour);
                 }
             }
@@ -297,8 +300,7 @@ public class WorldMap implements IWorldMap {
         if (freeNeighbours.size() == 0) {
             MapDirection neighbourDirection = MapDirection.randomDirection();
             return loopChange(position.add(neighbourDirection.toUnitVector()));
-        }
-        else {
+        } else {
             Random rng = new Random();
             return loopChange(freeNeighbours.get(rng.nextInt(freeNeighbours.size())));
         }
@@ -333,13 +335,13 @@ public class WorldMap implements IWorldMap {
     private void generateGrass() {
         Random rng = new Random();
         int freeSpacesInsideJungle = positionsWithoutElementInsideJungle.size();
-        if(freeSpacesInsideJungle != 0) {
+        if (freeSpacesInsideJungle != 0) {
             Position newGrassInJunglePosition = positionsWithoutElementInsideJungle.get(rng.nextInt(freeSpacesInsideJungle));
             Grass newGrassInJungle = new Grass(newGrassInJunglePosition);
             placeGrass(newGrassInJungle);
         }
         int freeSpacesOutsideJungle = positionsWithoutElementOutsideJungle.size();
-        if(freeSpacesOutsideJungle != 0) {
+        if (freeSpacesOutsideJungle != 0) {
             Position newGrassOutJunglePosition = positionsWithoutElementOutsideJungle.get(rng.nextInt(freeSpacesOutsideJungle));
             Grass newGrassOutJungle = new Grass(newGrassOutJunglePosition);
             placeGrass(newGrassOutJungle);
@@ -348,10 +350,11 @@ public class WorldMap implements IWorldMap {
 
     /**
      * Generates first animals on the map.
+     *
      * @param progenitorsAmount Amount of animals to generate.
      */
     private void generateProgenitors(int progenitorsAmount) {
-        if(progenitorsAmount < 0 || progenitorsAmount > width*height) {
+        if (progenitorsAmount < 0 || progenitorsAmount > width * height) {
             throw new IllegalArgumentException("Amount of animals at beginning not in scope");
         }
         Random rng = new Random();
@@ -364,8 +367,7 @@ public class WorldMap implements IWorldMap {
                 Position progenitorPosition = positionsWithoutElementInsideJungle.get(randomIndex);
                 Animal progenitor = new Animal(progenitorPosition, startEnergy, this);
                 place(progenitor);
-            }
-            else {
+            } else {
                 randomIndex -= freeSpacesInJungle;
                 Position progenitorPosition = positionsWithoutElementOutsideJungle.get(randomIndex);
                 Animal progenitor = new Animal(progenitorPosition, startEnergy, this);

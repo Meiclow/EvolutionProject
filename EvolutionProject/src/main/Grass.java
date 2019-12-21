@@ -10,13 +10,19 @@ public class Grass {
 
     /**
      * Gets position of grass.
+     *
      * @return Position of grass.
      */
-    public Position getPosition() { return this.position; }
+    public Position getPosition() {
+        return this.position;
+    }
 
     /**
      * Shows grass as String.
+     *
      * @return "g"
      */
-    public String toString() { return "g"; }
+    public String toString() {
+        return "g";
+    }
 }

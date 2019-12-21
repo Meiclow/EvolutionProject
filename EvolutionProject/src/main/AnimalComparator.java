@@ -14,8 +14,7 @@ public class AnimalComparator implements Comparator {
             Random rng = new Random();
             if (rng.nextInt(1) == 0) return 1;
             else return -1;
-        }
-        else if (energy1 > energy2) return -1;
+        } else if (energy1 > energy2) return -1;
         else return 1;
     }
 }

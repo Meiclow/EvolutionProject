@@ -26,6 +26,7 @@ public class Animal {
 
     /**
      * Gets position of animal.
+     *
      * @return Position of animal.
      */
     public Position getPosition() {
@@ -42,6 +43,7 @@ public class Animal {
 
     /**
      * Increases energy of animal.
+     *
      * @param energyGain Amount of energy addition.
      */
     public void eat(int energyGain) {
@@ -50,6 +52,7 @@ public class Animal {
 
     /**
      * Sets position of animal.
+     *
      * @param position Position to set to.
      */
     public void setPosition(Position position) {
@@ -58,6 +61,7 @@ public class Animal {
 
     /**
      * Gets energy of animal.
+     *
      * @return Energy of animal.
      */
     public int getEnergy() {
@@ -66,6 +70,7 @@ public class Animal {
 
     /**
      * Gets direction of animal.
+     *
      * @return direction of animal.
      */
     public MapDirection getDirection() {
@@ -74,6 +79,7 @@ public class Animal {
 
     /**
      * Checks if animal can copulate.
+     *
      * @param energyRequired Energy required for animal to copulate.
      * @return true if animal can copulate.
      */
@@ -85,18 +91,24 @@ public class Animal {
      * Decreases energy of animal by fourth after copulating.
      */
     public void exhaustFromCopulating() {
-        this.energy = this.energy*3/4;
+        this.energy = this.energy * 3 / 4;
     }
 
     /**
      * Decreases energy of animal by set value after moving.
+     *
      * @param moveEnergy Value to decrease by.
      */
-    public void exhaustFromMoving(int moveEnergy) {this.energy -= moveEnergy;}
+    public void exhaustFromMoving(int moveEnergy) {
+        this.energy -= moveEnergy;
+    }
 
     /**
      * Shows animal as String.
+     *
      * @return "a"
      */
-    public String toString() { return "a"; }
+    public String toString() {
+        return "a";
+    }
 }

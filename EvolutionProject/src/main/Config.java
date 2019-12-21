@@ -27,7 +27,7 @@ public class Config {
 
         JSONObject jo = (JSONObject) obj;
 
-        width =  Integer.parseInt((String) jo.get("width"));
+        width = Integer.parseInt((String) jo.get("width"));
         height = Integer.parseInt((String) jo.get("height"));
         jungleRatio = Double.parseDouble((String) jo.get("jungleRatio"));
         moveEnergy = Integer.parseInt((String) jo.get("moveEnergy"));

@@ -26,6 +26,7 @@ public class Genotype {
 
     /**
      * Creates genome inherited from parents.
+     *
      * @param parent1 First parent to inherit from.
      * @param parent2 Second parent to inherit from.
      */

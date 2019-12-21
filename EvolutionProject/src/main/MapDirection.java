@@ -32,6 +32,7 @@ public enum MapDirection {
 
     /**
      * Rotates direction clockwise.
+     *
      * @param rotationPower How many times rotate the direction clockwise.
      * @return New direction after rotation.
      */
@@ -48,6 +49,7 @@ public enum MapDirection {
 
     /**
      * Changes direction into 'wersor'(not really).
+     *
      * @return 'Wersor' of the direction.
      */
     public Position toUnitVector() {
@@ -73,6 +75,7 @@ public enum MapDirection {
 
     /**
      * Creates random direction.
+     *
      * @return Random direction.
      */
     public static MapDirection randomDirection() {

@@ -7,16 +7,16 @@ public class World {
 
         Config config = new Config();
 
-        WorldMap map = new WorldMap(config.getWidth(),config.getHeight(),config.getStartEnergy(),config.getMoveEnergy(),config.getPlantEnergy(), config.getJungleRatio());
+        WorldMap map = new WorldMap(config.getWidth(), config.getHeight(), config.getStartEnergy(), config.getMoveEnergy(), config.getPlantEnergy(), config.getJungleRatio());
         map.init(config.getStartAnimals());
         MapVisualizer visualizer = new MapVisualizer(map);
-        Position lowerLeft = new Position(0,0);
-        Position upperRight = new Position(config.getWidth()-1, config.getHeight()-1);
+        Position lowerLeft = new Position(0, 0);
+        Position upperRight = new Position(config.getWidth() - 1, config.getHeight() - 1);
         System.out.println(visualizer.draw(lowerLeft, upperRight));
 
-        while(true) {
+        while (true) {
             map.cycle();
-            System.out.println(visualizer.draw(lowerLeft, upperRight ));
+            System.out.println(visualizer.draw(lowerLeft, upperRight));
         }
 
     }

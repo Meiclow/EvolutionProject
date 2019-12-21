@@ -1,10 +1,10 @@
 package main;
+
 /**
  * The interface responsible for interacting with the map of the world.
  * Assumes that Vector2d and MoveDirection classes are defined.
  *
  * @author apohllo
- *
  */
 public interface IWorldMap {
 
@@ -21,8 +21,7 @@ public interface IWorldMap {
      * confused with canMove since there might be empty positions where the animal
      * cannot move.
      *
-     * @param position
-     *            Position to check.
+     * @param position Position to check.
      * @return True if the position is occupied.
      */
     boolean isOccupied(Position position);
@@ -30,8 +29,7 @@ public interface IWorldMap {
     /**
      * Return an object at a given position.
      *
-     * @param position
-     *            The position of the object.
+     * @param position The position of the object.
      * @return Object or null if the position is not occupied.
      */
     Object objectAt(Position position);
